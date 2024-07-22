@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [selectedPoint, setSelectedPoint] = useState(null);
   const [note, setNote] = useState('');
   const [title, setTitle] = useState('');
+  const [evidences, setEvidences] = useState(null);
   const [file, setFile] = useState(null);
   const [showInsertModal, setShowInsertModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -24,7 +25,22 @@ const Dashboard = () => {
             'Authorization': `Bearer ${token}`
           }
         });
-        setPoints(response.data);
+        // busca as evidências de cada ponto
+        let aux_pontos = response.data
+        for (const point of aux_pontos) {
+            try {
+                const token = localStorage.getItem('authToken');
+                const responseEvidences = await axios.get(`${process.env.REACT_APP_API_URL}/evidences/point/${point._id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                point.evidences = responseEvidences.data;  // Adiciona as evidências diretamente ao ponto
+            } catch (error) {
+                console.error(`Erro ao buscar evidências para o ponto ${point._id}:`, error);
+            }
+        }
+        setPoints(aux_pontos);
       } catch (error) {
         console.error('Error fetching points', error);
       }
@@ -35,6 +51,8 @@ const Dashboard = () => {
 
   const handleMarkerClick = (point) => {
     setSelectedPoint(point);
+    setEvidences(point.evidences);
+    console.log(evidences)
   };
 
   const handleCloseModal = () => {
@@ -127,7 +145,7 @@ const Dashboard = () => {
       </MapContainer>
 
       <Modal show={!!selectedPoint} onHide={handleCloseModal}>
-        {selectedPoint && (
+        {selectedPoint && evidences && (
           <div>
             <Modal.Header closeButton>
               <Modal.Title>{selectedPoint.name}</Modal.Title>
@@ -137,6 +155,19 @@ const Dashboard = () => {
               <p><strong>Coordenadas</strong><br /> {selectedPoint.location.coordinates[1]}, {selectedPoint.location.coordinates[0]}</p>
               <Container>
                 <Row>
+                {evidences && evidences.map(evidence => (
+                    <Col key={evidence.id} xs={6} md={4} lg={3} className="mb-4">
+                      <Card onClick={() => evidence.id === 'new' ? setShowInsertModal(true) : null}>
+                        <Card.Img 
+                          variant="top" 
+                          src={evidence.images[0] && evidence.images[0].name ? `${process.env.REACT_APP_API_URL}/images/${evidence.images[0].name}` : ''} 
+                        />
+                        <Card.Body>
+                          <Card.Text>{evidence.title}</Card.Text>
+                        </Card.Body>
+                      </Card>
+                    </Col>
+                  ))}                    
                   {thumbnails.map(thumbnail => (
                     <Col key={thumbnail.id} xs={6} md={4} lg={3} className="mb-4">
                       <Card onClick={() => thumbnail.id === 'new' ? setShowInsertModal(true) : null}>
