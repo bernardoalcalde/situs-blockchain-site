@@ -13,7 +13,7 @@ const Dashboard = () => {
   const [title, setTitle] = useState('');
   const [evidences, setEvidences] = useState(null);
   const [file, setFile] = useState(null);
-  const [showInsertModal, setShowInsertModal] = useState(false);
+  const [showInsertModal, setShowInsertModal] = useState(true);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   useEffect(() => {
@@ -190,10 +190,10 @@ const Dashboard = () => {
 
       <Modal show={showInsertModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
-          <Modal.Title>Inserir Evidência</Modal.Title>
+          <Modal.Title style={{color: "#613000"}}>Inserir Evidência</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={handleSave}>
+          <Form onSubmit={handleSave} style={{color: "#613000"}}>
             <Form.Group controlId="formTitle">
               <Form.Label>Título</Form.Label>
               <Form.Control 
@@ -213,7 +213,7 @@ const Dashboard = () => {
                 placeholder="Adicione uma descrição" 
               />
             </Form.Group>
-            <Form.Group controlId="formFile">
+            <Form.Group controlId="formFile" className='mt-4'>
               <Form.Label>Fotografias</Form.Label>
               <Form.Control 
                 type="file" 
@@ -221,12 +221,12 @@ const Dashboard = () => {
                 onChange={handleFileChange} 
               />
             </Form.Group>
-            <Button variant="primary" type="submit" onClick={() => setShowConfirmation(true)} block>
-              Salvar
-            </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
+            <Button style={{backgroundColor: "#613000", border: "none"}} type="submit" onClick={() => setShowConfirmation(true)} block>
+              Salvar
+            </Button>
           <Button variant="secondary" onClick={handleCloseModal}>Fechar</Button>
         </Modal.Footer>
       </Modal>

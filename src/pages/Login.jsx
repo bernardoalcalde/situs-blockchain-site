@@ -26,14 +26,14 @@ const Login = () => {
   };
 
   return (
-    <Container>
-      <Row className="justify-content-center mt-5">
-        <Col md={6} lg={4}>
-          <Card>
+    <div style={{height: "100vh", backgroundColor: "var(--color1)", margin: "0px 0px 0px 0px"}}>
+      <Row className="justify-content-center">
+        <Col style={{marginTop: "100px"}} md={6} lg={4}>
+          <Card style={{maxWidth: "400px"}}>
             <Card.Body>
-              <h2 className="text-center mb-4">Login</h2>
+              <h2 className="text-center mb-4" style={{color: "#613000"}}>Login</h2>
               {error && <Alert variant="danger">{error}</Alert>}
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} style={{color: "#613000"}}>
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control 
@@ -54,9 +54,11 @@ const Login = () => {
                   />
                 </Form.Group>
 
-                <Button variant="primary" type="submit" block>
-                  Entrar
-                </Button>
+                <div className="d-flex justify-content-center w-100">
+                  <Button className='mt-3' style={{backgroundColor: "#613000", border: "none"}} type="submit">
+                    Entrar
+                  </Button>
+                </div>
               </Form>
               <div className="text-center mt-3">
                 <Link to="/register">Criar conta</Link>
@@ -65,7 +67,7 @@ const Login = () => {
           </Card>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 };
 

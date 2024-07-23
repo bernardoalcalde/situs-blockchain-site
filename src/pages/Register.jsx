@@ -41,14 +41,14 @@ const Register = () => {
   };
 
   return (
-    <Container>
-      <Row className="justify-content-center mt-5">
-        <Col md={6} lg={4}>
+    <div style={{height: "100vh", backgroundColor: "var(--color1)", margin: "0px 0px 0px 0px"}}>
+      <Row className="justify-content-center">
+        <Col style={{marginTop: "100px"}} md={6} lg={4}>
           <Card>
             <Card.Body>
-              <h2 className="text-center mb-4">Criar Usuário</h2>
+              <h2 className="text-center mb-4" style={{color: "#613000"}}>Criar Usuário</h2>
               {message && <Alert variant="info">{message}</Alert>}
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} style={{color: "#613000"}}>
                 <Form.Group controlId="formName">
                   <Form.Label>Nome</Form.Label>
                   <Form.Control
@@ -89,15 +89,17 @@ const Register = () => {
                     required
                   />
                 </Form.Group>
-                <Button variant="primary" type="submit" block>
-                  Registrar
-                </Button>
+                <div className="d-flex justify-content-center w-100">
+                  <Button className='mt-3' style={{backgroundColor: "#613000", border: "none"}} type="submit">
+                    Entrar
+                  </Button>
+                </div>
               </Form>
             </Card.Body>
           </Card>
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 };
 

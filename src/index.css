@@ -1,3 +1,7 @@
+:root{
+  --color1: #8a7055;
+}
+
 body {
   background-color: #f8f9fa;
 }
@@ -12,4 +16,8 @@ body {
 
 .text-center {
   text-align: center !important;
+}
+
+a {
+  color: #613000;
 }
